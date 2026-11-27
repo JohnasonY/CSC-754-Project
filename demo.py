@@ -3,13 +3,13 @@ from __future__ import annotations
 import random  # randomly choose routes for vehicles.
 import traci  # allows Python to control a running SUMO simulation
 import sumolib  # read network files and locate the SUMO executable
+from config import NET_FILE
 
-NET_FILE: str = "intersection_fixed_trafficLight.xml"
 SIM_TIME: int = 999999  # the maximum number of iterations for the simulation
 
 # Read network and find valid routes
 net: sumolib.net.Net = sumolib.net.readNet(
-    NET_FILE
+    str(NET_FILE)
 )  # a network object containing information about roads, junctions, and connections
 junction: sumolib.net.node.Node = net.getNode("J1")
 routes: list[list[str]] = []
@@ -29,7 +29,7 @@ print(routes)
 
 # Start SUMO-GUI
 traci.start(
-    [sumolib.checkBinary("sumo-gui"), "-n", NET_FILE, "--start", "--delay", "100"]
+    [sumolib.checkBinary("sumo-gui"), "-n", str(NET_FILE), "--start", "--delay", "100"]
 )
 
 try:
