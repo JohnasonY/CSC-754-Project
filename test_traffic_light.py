@@ -1,14 +1,18 @@
-import random   # randomly choose routes for vehicles.
-import traci    # allows Python to control a running SUMO simulation
+from __future__ import annotations
+
+import random  # randomly choose routes for vehicles.
+import traci  # allows Python to control a running SUMO simulation
 import sumolib  # read network files and locate the SUMO executable
 
-NET_FILE = "intersection_fixed_trafficLight.xml"
-SIM_TIME = 999999   # the maximum number of iterations for the simulation
+NET_FILE: str = "intersection_fixed_trafficLight.xml"
+SIM_TIME: int = 999999  # the maximum number of iterations for the simulation
 
 # Read network and find valid routes
-net = sumolib.net.readNet(NET_FILE)     # a network object containing information about roads, junctions, and connections
-junction = net.getNode("J1")
-routes = []
+net: sumolib.net.Net = sumolib.net.readNet(
+    NET_FILE
+)  # a network object containing information about roads, junctions, and connections
+junction: sumolib.net.node.Node = net.getNode("J1")
+routes: list[list[str]] = []
 
 for edge in junction.getIncoming():
     for next_edge in edge.getOutgoing():
@@ -17,17 +21,16 @@ for edge in junction.getIncoming():
         if edge.getFromNode() == next_edge.getToNode():
             continue
 
-        routes.append([edge.getID(), next_edge.getID()])      # append([incoming road id, outgoing road id])
+        routes.append(
+            [edge.getID(), next_edge.getID()]
+        )  # append([incoming road id, outgoing road id])
 
 print(routes)
 
 # Start SUMO-GUI
-traci.start([
-    sumolib.checkBinary("sumo-gui"),
-    "-n", NET_FILE,
-    "--start",
-    "--delay", "100"
-])
+traci.start(
+    [sumolib.checkBinary("sumo-gui"), "-n", NET_FILE, "--start", "--delay", "100"]
+)
 
 try:
     # Register routes
@@ -39,18 +42,20 @@ try:
 
         # Generate one vehicle every 3 seconds
         if t % 3 == 0:
-            route_id = f"route{random.randrange(len(routes))}" # generate a random route id
+            route_id: str = (
+                f"route{random.randrange(len(routes))}"  # generate a random route id
+            )
 
             traci.vehicle.add(
                 f"car{t}",  # unique car id
-                route_id,   # the route to instantiate the car
-                departLane="random" # randomly choose a departure lane
+                route_id,  # the route to instantiate the car
+                departLane="random",  # randomly choose a departure lane
             )
 
         traci.simulationStep()
 
         # Display traffic light phase
-        phase = traci.trafficlight.getPhase("J1")
+        phase: int = traci.trafficlight.getPhase("J1")
 
         print(
             f"Time: {t + 1}s | "
