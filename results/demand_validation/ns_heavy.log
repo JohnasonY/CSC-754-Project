@@ -1,0 +1,22 @@
+Loading net-file from 'models/networks/intersection_fixed_trafficLight.net.xml' ... done (3ms).
+Loading route-files incrementally from 'models/routes/ns_heavy.rou.xml'
+Loading done.
+Simulation version 1.28.0 started with time: 0.00.
+Simulation ended at time: 3600.00.
+Reason: The final simulation step has been reached.
+Performance:
+ Duration: 0.46s
+ Real time factor: 7809.11
+ UPS: 147305.856833
+Vehicles:
+ Inserted: 1200
+ Running: 16
+ Waiting: 0
+Statistics (avg of 1200):
+ RouteLength: 388.60
+ Speed: 8.09
+ Duration: 56.59
+ WaitingTime: 20.99
+ TimeLoss: 26.63
+ DepartDelay: 0.49
+ DepartDelayWaiting: 0.00

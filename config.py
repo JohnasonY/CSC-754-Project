@@ -3,8 +3,8 @@
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent
-NET_FILE = PROJECT_DIR / "networks" / "intersection_fixed_trafficLight.net.xml"
-ROUTES_DIR = PROJECT_DIR / "routes"
+NET_FILE = PROJECT_DIR / "models" / "networks" / "intersection_fixed_trafficLight.net.xml"
+ROUTES_DIR = PROJECT_DIR / "models" / "routes"
 MODELS_DIR = PROJECT_DIR / "models"
 RESULTS_DIR = PROJECT_DIR / "results"
 SCENARIOS = {
